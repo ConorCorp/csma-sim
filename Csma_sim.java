@@ -1,5 +1,7 @@
 
 class Csma_sim {
+    //CONFIGURATION PARAMS
+    //see Station.java for Running Params
     public static final int NUM_STATIONS = 8;
 
     public static void main(String args[]) {
@@ -8,7 +10,7 @@ class Csma_sim {
 
         //init stations
         Station[] stns = new Station[NUM_STATIONS];
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < NUM_STATIONS; i++) {
             stns[i] = new Station(medium, i);
             stns[i].start();
         }
