@@ -2,20 +2,28 @@ import java.util.Random;
 
 class Station extends Thread {
     //RUNNING PARAMS
-    private static final int t_s = 100; //100 cycle tick
-    private static final int t_d = 240; //240 sleep
-    private static final int t_p = 120; //Data packet wait t_d * .5
-    private static final int t_ifs = 10; //Ack wait
-    private static final float p = .3f; // min prob (arbitrary)
-    private static final int t_difs = 21;
-    private static final int w = 5;
+    private int t_s; //100 cycle tick
+    private int t_d; //240 sleep
+    private int t_p; //Data packet wait t_d * .5
+    private int t_ifs; //Ack wait
+    private float p; // min prob (arbitrary)
+    private int t_difs;
+    private int w;
     private Medium medium;
-    private int  M = 4; //# of packets for eah station
-    private int k = -1, t_tot = 0, t_cw, stNum;
+    private int  M; //# of packets for eah station
+    private int k = -1, t_tot = 0, t_cw, stNum, t_tot_all=0;
 
-    public Station(Medium medium, int stNum) {
+    public Station(Medium medium, int stNum, int t_s, int t_d, int t_p, int t_ifs, float p, int t_difs, int w, int M) {
+        this.t_s = t_s; //100 cycle tick
+        this.t_d = t_d; //240 sleep
+        this.t_p = t_p; //Data packet wait t_d * .5
+        this.t_ifs = t_ifs; //Ack wait
+        this.p = p; // min prob (arbitrary)
+        this.t_difs = t_difs;
+        this.w = w;
         this.medium = medium;
         this.stNum = stNum;
+        this.M = M;
     }
 
     //Called on start as well
@@ -78,8 +86,9 @@ class Station extends Thread {
             t_tot += t_difs; //21
             M--; // decrementing for 22, checked at beginning
             System.out.println("Station: "+ stNum + " finished a packet with " + t_tot +" ticks");//23
+            t_tot_all+= t_tot;            
         }
-        System.out.println("Finished Staion "+stNum);
+        System.out.println("Finished Staion "+stNum+" with total time of all packets :"+t_tot_all+" ticks.");
         
     }
 
